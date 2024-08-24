@@ -282,12 +282,11 @@ async def auto_rename_files(client, message):
                     progress_args=("Upload Started.....", upload_msg, time.time())
                 )
             elif type == "video":
-                await client.send_video(
+                await client.send_document(
                     message.chat.id,
-                    video=metadata_path if _bool_metadata else file_path,
-                    caption=caption,
+                    document=metadata_path if _bool_metadata else file_path,
                     thumb=ph_path,
-                    duration=duration,
+                    caption=caption,
                     progress=progress_for_pyrogram,
                     progress_args=("Upload Started.....", upload_msg, time.time())
                 )
