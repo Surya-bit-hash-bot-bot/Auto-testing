@@ -8,7 +8,6 @@ from hachoir.parser import createParser
 from helper.utils import progress_for_pyrogram, humanbytes, convert
 from helper.database import AshutoshGoswami24
 from config import Config, Txt
-from config import Config
 from plugins.speed import rename_queue  # Import the queue functionality
 import os
 import asyncio
@@ -144,7 +143,7 @@ async def auto_rename_files(client, message):
     user_id = message.from_user.id
 
     # Check if the user is an admin (for queue feature)
-    if user_id in Config.Admin:
+    if user_id in Config.ADMIN:
         # Add the task to the queue and process it
         rename_task = lambda: process_rename(client, message)  # Define the rename task as a function
         rename_queue.add_to_queue(user_id, rename_task)
