@@ -9,7 +9,7 @@ from helper.utils import progress_for_pyrogram, humanbytes, convert
 from helper.database import AshutoshGoswami24
 from config import Config, Txt
 from config import Config
-from queue import rename_queue  # Import the queue functionality
+from speed import rename_queue  # Import the queue functionality
 import os
 import asyncio
 import time
