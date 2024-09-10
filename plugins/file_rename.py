@@ -8,7 +8,6 @@ from hachoir.parser import createParser
 from helper.utils import progress_for_pyrogram, humanbytes, convert
 from helper.database import AshutoshGoswami24
 from config import Config, Txt
-from plugins.speed import rename_queue  # Import the queue functionality
 import os
 import asyncio
 import time
@@ -139,31 +138,13 @@ print(f"Extracted Episode Number: {episode_number}")
 
 
 @Client.on_message(filters.private & (filters.document | filters.video | filters.audio))
-async def auto_rename_files(client, message):
-    user_id = message.from_user.id
-
-    # Check if the user is an admin (for queue feature)
-    if user_id in Config.ADMIN:
-        # Add the task to the queue and process it
-        rename_task = lambda: process_rename(client, message)  # Define the rename task as a function
-        rename_queue.add_to_queue(user_id, rename_task)
-
-        if not rename_queue.is_in_queue(user_id):
-            await rename_queue.process_queue(user_id)
-    else:
-        return await message.reply_text("You are not authorized to use the queue feature.")
-
-# This is the main rename function to process each task in the queue
-async def process_rename(client, message):
+async def auto_rename_files(client, message):    
     user_id = message.from_user.id
     format_template = await AshutoshGoswami24.get_format_template(user_id)
     media_preference = await AshutoshGoswami24.get_media_preference(user_id)
 
     if not format_template:
         return await message.reply_text("Please set an auto-rename format first using /autorename")
-
-    # Logic for renaming the file
-    # Rest of your auto-rename logic...
 
     # Ensure the renaming operation finishes before processing the next task in the queue
     await asyncio.sleep(2)  # Simulate some work being done, replace with actual code
