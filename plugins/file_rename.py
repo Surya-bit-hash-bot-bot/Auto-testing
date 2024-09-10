@@ -146,9 +146,6 @@ async def auto_rename_files(client, message):
     if not format_template:
         return await message.reply_text("Please set an auto-rename format first using /autorename")
 
-    # Ensure the renaming operation finishes before processing the next task in the queue
-    await asyncio.sleep(2)  # Simulate some work being done, replace with actual code
-    # Extract information from the incoming file name
     if message.document:
         file_id = message.document.file_id
         file_name = message.document.file_name
