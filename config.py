@@ -5,7 +5,7 @@ class Config(object):
     # pyro client config
     API_ID    = os.environ.get("API_ID", "21740783")
     API_HASH  = os.environ.get("API_HASH", "a5dc7fec8302615f5b441ec5e238cd46")
-    BOT_TOKEN = os.environ.get("BOT_TOKEN", "7435219753:AAFzGs09ktzVU6Zt7NI_ChfVyAAPlDDe9FU") 
+    BOT_TOKEN = os.environ.get("BOT_TOKEN", "6005947500:AAHloPfbZLLgDobGyMwLn1DLbn2WptOJIgo") 
 
     # database config
     DB_NAME = os.environ.get("DB_NAME","Speedwolf1")     
@@ -13,11 +13,12 @@ class Config(object):
  
     # other configs
     BOT_UPTIME  = time.time()
-    START_PIC   = os.environ.get("START_PIC", "")
+    START_PIC   = os.environ.get("START_PIC", "https://graph.org/file/aa825ab156b1fed2edc2a.jpg")
     ADMIN       = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '6299192020').split()]
     # -- FORCE_SUB_CHANNELS = ["BotzPW","AshuSupport","AshutoshGoswami24"] -- # 
-    FORCE_SUB_CHANNELS = os.environ.get('FORCE_SUB_CHANNELS', 'Anime_warrior_tamil').split(',')
-    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "0"))
+    FORCE_SUB_CHANNELS = os.environ.get('FORCE_SUB_CHANNELS', '0').split(',')
+    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1001719724807"))
+    DUMP_CHANNEL = int(os.environ.get("DUMP_CHANNEL", "-1001946810914"))
     PORT = int(os.environ.get("PORT", "8030"))
     
     # wes response configuration     
