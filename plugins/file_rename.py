@@ -1,223 +1,180 @@
-from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ForceReply
-from pyrogram.errors import FloodWait
-from pyrogram.enums import MessageMediaType
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
-from helper.utils import progress_for_pyrogram, convert, humanbytes
-from helper.database import db
-from config import Config
-from PIL import Image
-import shutil, subprocess, os, time
-from asyncio import sleep
+@Client.on_message(filters.private & (filters.document | filters.video | filters.audio))
+async def auto_rename_files(client, message):    
+    user_id = message.from_user.id
 
-@Client.on_message(filters.private & (filters.document | filters.audio | filters.video))
-async def rename_start(client, message):
-    file = getattr(message, message.media.value)
-    filename = file.file_name
-    # if await check_anti_nsfw(filename, message):
-    #     return
+    format_template = await AshutoshGoswami24.get_format_template(user_id)
+    media_preference = await AshutoshGoswami24.get_media_preference(user_id)
 
-    if file.file_size > 2000 * 1024 * 1024:
-        return await message.reply_text("Sorry Bro This Bot Doesn't Support Uploading Files Bigger Than 2GB")
+    if not format_template:
+        return await message.reply_text("Please set an auto-rename format first using /autorename")
 
-    try:
-        await message.reply_text(
-            text=f"**Please Enter New Filename...**\n\n**Old File Name** :- `{filename}`",
-            reply_to_message_id=message.id,
-            reply_markup=ForceReply(True)
-        )
-        await sleep(30)
-    except FloodWait as e:
-        await sleep(e.value)
-        await message.reply_text(
-            text=f"**Please Enter New Filename**\n\n**Old File Name** :- `{filename}`",
-            reply_to_message_id=message.id,
-            reply_markup=ForceReply(True)
-        )
-    except:
-        pass
-
-
-@Client.on_message(filters.private & filters.reply)
-async def refunc(client, message):
-    reply_message = message.reply_to_message
-    if (reply_message.reply_markup) and isinstance(reply_message.reply_markup, ForceReply):
-        new_name = message.text
-        await message.delete()
-        msg = await client.get_messages(message.chat.id, reply_message.id)
-        file = msg.reply_to_message
-        media = getattr(file, file.media.value)
-        # if await check_anti_nsfw(new_name, message):
-        #     return
-        if not "." in new_name:
-            if "." in media.file_name:
-                extn = media.file_name.rsplit('.', 1)[-1]
-            else:
-                extn = "mkv"
-            new_name = new_name + "." + extn
-        await reply_message.delete()
-
-        button = [[InlineKeyboardButton("📁 Document", callback_data="upload_document")]]
-        if file.media in [MessageMediaType.VIDEO, MessageMediaType.DOCUMENT]:
-            button.append([InlineKeyboardButton("🎥 Video", callback_data="upload_video")])
-        elif file.media == MessageMediaType.AUDIO:
-            button.append([InlineKeyboardButton("🎵 Audio", callback_data="upload_audio")])
-        await message.reply(
-            text=f"**Select The Output File Type**\n\n**File Name :-** `{new_name}`",
-            reply_to_message_id=file.id,
-            reply_markup=InlineKeyboardMarkup(button)
-        )
-
-
-@Client.on_callback_query(filters.regex("upload"))
-async def doc(bot, update):
-    user_id = update.from_user.id
-    prefix = await db.get_prefix(update.message.chat.id)
-    suffix = await db.get_suffix(update.message.chat.id)
-    new_name = update.message.text
-    new_filename_ = new_name.split(":-")[1]
-
-    try:
-        if prefix and suffix:
-            shorted = new_filename_[:-4:]
-            extension = new_filename_[-4::]
-            new_filename = f"{prefix} {shorted} {suffix}{extension}"
-
-        elif prefix:
-            shorted = new_filename_[:-4:]
-            extension = new_filename_[-4::]
-            new_filename = f"{prefix} {shorted}{extension}"
-
-        elif suffix:
-            shorted = new_filename_[:-4:]
-            extension = new_filename_[-4::]
-            new_filename = f"{shorted} {suffix}{extension}"
-
-        else:
-            new_filename = new_filename_
-    except:
-        await update.message.edit(
-            "⚠️ Something went wrong can't able to set Prefix or Suffix in the File ☹️ \n\n Contact in Support Group for Help -> @EdgeBotSupport")
-
-    file_path = f"downloads/{new_filename}"
-    file = update.message.reply_to_message
-
-    ms = await update.message.edit("`Trying To Downloading`")
-    try:
-        path = await bot.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram,
-                                        progress_args=("`Download Started....`", ms, time.time()))
-    except Exception as e:
-        return await ms.edit(e)
-
-    user_metadata_enabled = await db.get_metadata(user_id)
-    if user_metadata_enabled == "On":
-
-        # Generate a temporary file path
-        temp_output_file = file_path.replace('.mkv', '_temp.mkv')
-
-        ffmpeg_cmd = shutil.which('ffmpeg')
-
-        title = await db.get_title(user_id)
-        author = await db.get_author(user_id)
-        artist = await db.get_artist(user_id)
-        video = await db.get_video(user_id)
-        audio = await db.get_audio(user_id)
-        subtitle = await db.get_subtitle(user_id)
-
-        # Add metadata using subprocess and ffmpeg command
-        metadata_command = [
-            'ffmpeg',
-            '-i', file_path,
-            '-metadata', f'title={title}',
-            '-metadata', f'artist={artist}',
-            '-metadata', f'author={author}',
-            # '-metadata', 'comment=Join @Anime_Edge for more content',
-            '-metadata', 'additional_key=additional_value',
-            '-metadata:s:v', f'title={video}',
-            '-metadata:s:a', f'title={audio}',
-            '-metadata:s:s', f'title={subtitle}',
-            '-map', '0',
-            '-c', 'copy',
-            '-loglevel', 'error',
-            temp_output_file
-        ]
-
-        try:
-            subprocess.run(metadata_command, check=True)
-            # Rename the temporary file to the desired output file
-            shutil.move(temp_output_file, file_path)
-
-        except subprocess.CalledProcessError as e:
-            # send the error to the user
-            await ms.edit(f"Error adding metadata: {e}")
-            print(f"Error adding metadata: {e}")
-
-        finally:
-            # Cleanup: Remove the temporary file if it exists
-            if os.path.exists(temp_output_file):
-                os.remove(temp_output_file)
+    if message.document:
+        file_id = message.document.file_id
+        file_name = message.document.file_name
+        media_type = media_preference or "document"
+    elif message.video:
+        file_id = message.video.file_id
+        file_name = f"{message.video.file_name}.mp4"
+        media_type = media_preference or "video"
+    elif message.audio:
+        file_id = message.audio.file_id
+        file_name = f"{message.audio.file_name}.mp3"
+        media_type = media_preference or "audio"
     else:
-        print("Metadata is disabled for this user.")
+        return await message.reply_text("Unsupported File Type")
 
-    duration = 0
-    try:
-        metadata = extractMetadata(createParser(file_path))
-        if metadata.has("duration"):
-            duration = metadata.get('duration').seconds
-    except:
-        pass
-    ph_path = None
-    user_id = int(update.message.chat.id)
-    media = getattr(file, file.media.value)
-    c_caption = await db.get_caption(update.message.chat.id)
-    c_thumb = await db.get_thumbnail(update.message.chat.id)
+    print(f"Original File Name: {file_name}")
 
-    if c_caption:
+    # Check whether the file is already being renamed or has been renamed recently
+    if file_id in renaming_operations:
+        elapsed_time = (datetime.now() - renaming_operations[file_id]).seconds
+        if elapsed_time < 10:
+            print("File is being ignored as it is currently being renamed or was renamed recently.")
+            return
+
+    # Mark the file as currently being renamed
+    renaming_operations[file_id] = datetime.now()
+
+    # Extract episode number and qualities
+    episode_number = extract_episode_number(file_name)
+    print(f"Extracted Episode Number: {episode_number}")
+
+    if episode_number:
+        placeholders = ["episode", "Episode", "EPISODE", "{episode}"]
+        for placeholder in placeholders:
+            format_template = format_template.replace(placeholder, str(episode_number), 1)
+
+        quality_placeholders = ["quality", "Quality", "QUALITY", "{quality}"]
+        for quality_placeholder in quality_placeholders:
+            if quality_placeholder in format_template:
+                extracted_qualities = extract_quality(file_name)
+                if extracted_qualities == "Unknown":
+                    await message.reply_text("I Was Not Able To Extract The Quality Properly. Renaming As 'Unknown'...")
+                    del renaming_operations[file_id]
+                    return
+                format_template = format_template.replace(quality_placeholder, "".join(extracted_qualities))   
+
+        if not os.path.isdir("Metadata"):
+            os.mkdir("Metadata")
+
+        _, file_extension = os.path.splitext(file_name)
+        new_file_name = f"{format_template}{file_extension}"
+        file_path = f"downloads/{new_file_name}"
+
+        file = message
+        download_msg = await message.reply_text(text="Trying To Download.....")
         try:
-            caption = c_caption.format(filename=new_filename, filesize=humanbytes(media.file_size),
-                                       duration=convert(duration))
+            path = await client.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram, progress_args=("Download Started....", download_msg, time.time()))
         except Exception as e:
-            return await ms.edit(text=f"Your Caption Error Except Keyword Argument: ({e})")
-        logcaption = f"**{new_filename}**\nUploaded by {update.from_user.mention()}"
-    else:
-        caption = f"**{new_filename}**"
-        logcaption = f"**{new_filename}**\nUploaded by {update.from_user.mention()}"
+            del renaming_operations[file_id]
+            return await download_msg.edit(e)  
 
-    if (media.thumbs or c_thumb):
-        if c_thumb:
-            ph_path = await bot.download_media(c_thumb)
+        _bool_metadata = await AshutoshGoswami24.get_metadata(message.chat.id)  
+
+        if (_bool_metadata):
+            metadata_path = f"Metadata/{new_file_name}"
+            metadata = await AshutoshGoswami24.get_metadata_code(message.chat.id)
+            if metadata:
+                await download_msg.edit("I Found Your Metadata🔥\n\n__Please Wait...__\n`Adding Metadata ⚡...`")
+                cmd = f"""ffmpeg -i "{path}" {metadata} "{metadata_path}" """
+                process = await asyncio.create_subprocess_shell(
+                    cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+                )
+                stdout, stderr = await process.communicate()
+                er = stderr.decode()
+                if er:
+                    return await download_msg.edit(str(er) + "\n\n**Error**")
+            await download_msg.edit("**Metadata Added To The File Successfully ✅**\n\n__**Please Wait...**__\n\n`😈Trying To Downloading`")
         else:
-            ph_path = await bot.download_media(media.thumbs[0].file_id)
-        Image.open(ph_path).convert("RGB").save(ph_path)
-        img = Image.open(ph_path)
-        img = img.resize((320, 320))
-        img.save(ph_path, "JPEG")
+            await download_msg.edit("`😈Trying To Downloading`") 
 
-    await ms.edit("Tʀyɪɴɢ Tᴏ Uᴩʟᴏᴀᴅɪɴɢ....")
-    type = update.data.split("_")[1]
-    try:
-        if type == "document":
-            await bot.send_document(
-                update.message.chat.id,
-                document=file_path,
-                thumb=ph_path,
-                caption=caption,
-                progress=progress_for_pyrogram,
-                progress_args=("Uᴩʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....", ms, time.time()))
-            await bot.send_document(
-                Config.DUMP_CHANNEL,
-                document=file_path,
-                thumb=ph_path,
-                caption=logcaption)
-        elif type == "video":
-            await bot.send_video(
-                update.message.chat.id,
-                video=file_path,
-                caption=caption,
-                thumb=ph_path,
-                duration=duration,
-                progress=progress_for_pyrogram,
-                progress_args=("Uᴩʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....", ms, time.time()))
-            await bot.send
+        duration = 0
+        try:
+            metadata = extractMetadata(createParser(file_path))
+            if metadata.has("duration"):
+                duration = metadata.get('duration').seconds
+        except Exception as e:
+            print(f"Error getting duration: {e}")
+
+        upload_msg = await download_msg.edit("Trying To Uploading⚡.....")
+        ph_path = None 
+        c_caption = await AshutoshGoswami24.get_caption(message.chat.id)
+        c_thumb = await AshutoshGoswami24.get_thumbnail(message.chat.id)
+
+        caption = c_caption.format(filename=new_file_name, filesize=humanbytes(message.document.file_size), duration=convert(duration)) if c_caption else f"**{new_file_name}**"
+
+        if c_thumb:
+            ph_path = await client.download_media(c_thumb)
+            print(f"Thumbnail downloaded successfully. Path: {ph_path}")
+        elif media_type == "video" and message.video.thumbs:
+            ph_path = await client.download_media(message.video.thumbs[0].file_id)
+
+        if ph_path:
+            Image.open(ph_path).convert("RGB").save(ph_path)
+            img = Image.open(ph_path)
+            img.resize((320, 320))
+            img.save(ph_path, "JPEG")    
+
+        try:
+            if media_type == "document":
+                await client.send_document(
+                    message.chat.id,
+                    document=metadata_path if _bool_metadata else file_path,
+                    thumb=ph_path,
+                    caption=caption,
+                    progress=progress_for_pyrogram,
+                    progress_args=("Upload Started.....", upload_msg, time.time())
+                )
+                await client.send_document(
+                    Config.DUMP_CHANNEL,
+                    document=metadata_path if _bool_metadata else file_path,
+                    thumb=ph_path,
+                    caption=f"**{new_file_name}**\nUploaded by {message.from_user.mention()}"
+                )
+            elif media_type == "video":
+                await client.send_video(
+                    message.chat.id,
+                    video=metadata_path if _bool_metadata else file_path,
+                    thumb=ph_path,
+                    caption=caption,
+                    progress=progress_for_pyrogram,
+                    progress_args=("Upload Started.....", upload_msg, time.time())
+                )
+                await client.send_video(
+                    Config.DUMP_CHANNEL,
+                    video=metadata_path if _bool_metadata else file_path,
+                    thumb=ph_path,
+                    caption=f"**{new_file_name}**\nUploaded by {message.from_user.mention()}"
+                )
+            elif media_type == "audio":
+                await client.send_audio(
+                    message.chat.id,
+                    audio=metadata_path if _bool_metadata else file_path,
+                    caption=caption,
+                    thumb=ph_path,
+                    duration=duration,
+                    progress=progress_for_pyrogram,
+                    progress_args=("Upload Started.....", upload_msg, time.time())
+                )
+                await client.send_audio(
+                    Config.DUMP_CHANNEL,
+                    audio=metadata_path if _bool_metadata else file_path,
+                    thumb=ph_path,
+                    caption=f"**{new_file_name}**\nUploaded by {message.from_user.mention()}"
+                )
+        except Exception as e:
+            os.remove(file_path)
+            if ph_path:
+                os.remove(ph_path)
+            if metadata_path:
+                os.remove(metadata_path)
+            return await upload_msg.edit(f"Error: {e}")
+
+        await download_msg.delete() 
+        if ph_path:
+            os.remove(ph_path)
+        if file_path:
+            os.remove(file_path)
+        if metadata_path:
+            os.remove(metadata_path)
                 
