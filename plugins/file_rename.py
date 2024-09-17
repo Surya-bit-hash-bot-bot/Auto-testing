@@ -269,48 +269,48 @@ async def auto_rename_files(client, message):
 
         
         try:
-            type = media_type  # Use 'media_type' variable instead
-            if type == "document":
-                await client.send_document(
-                    message.chat.id,
-                    document=metadata_path if _bool_metadata else file_path,
-                    thumb=ph_path,
-                    caption=caption,
-                    progress=progress_for_pyrogram,
-                    progress_args=("Upload Started.....", upload_msg, time.time()))
-                await bot.send_document(
+           if type == "document":
+            await bot.send_document(
+                update.message.chat.id,
+                document=file_path,
+                thumb=ph_path,
+                caption=caption,
+                progress=progress_for_pyrogram,
+                progress_args=("Uᴩʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....", ms, time.time()))
+            await bot.send_document(
                 Config.DUMP_CHANNEL,
                 document=file_path,
                 thumb=ph_path,
-                caption=logcaption)      
-         elif type == "video":
-                await client.send_document(
-                    message.chat.id,
-                    document=metadata_path if _bool_metadata else file_path,
-                    thumb=ph_path,
-                    caption=caption,
-                    progress=progress_for_pyrogram,
-                    progress_args=("Upload Started.....", upload_msg, time.time()))
-                await bot.send_video(
+                caption=logcaption)
+        elif type == "video":
+            await bot.send_video(
+                update.message.chat.id,
+                video=file_path,
+                caption=caption,
+                thumb=ph_path,
+                duration=duration,
+                progress=progress_for_pyrogram,
+                progress_args=("Uᴩʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....", ms, time.time()))
+            await bot.send_video(
                 Config.DUMP_CHANNEL,
                 video=file_path,
                 thumb=ph_path,
                 caption=logcaption)
-         elif type == "audio":
-                await client.send_audio(
-                    message.chat.id,
-                    audio=metadata_path if _bool_metadata else file_path,
-                    caption=caption,
-                    thumb=ph_path,
-                    duration=duration,
-                    progress=progress_for_pyrogram,
-                    progress_args=("Upload Started.....", upload_msg, time.time()))
-                await bot.send_audio(
+        elif type == "audio":
+            await bot.send_audio(
+                update.message.chat.id,
+                audio=file_path,
+                caption=caption,
+                thumb=ph_path,
+                duration=duration,
+                progress=progress_for_pyrogram,
+                progress_args=("Uᴩʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....", ms, time.time()))
+            await bot.send_audio(
                 Config.DUMP_CHANNEL,
                 audio=file_path,
                 thumb=ph_path,
-                caption=logcaption) 
-        except Exception as e:
+                caption=logcaption)
+    except Exception as e:
             os.remove(file_path)
             if ph_path:
                 os.remove(ph_path)
@@ -325,11 +325,5 @@ async def auto_rename_files(client, message):
             os.remove(file_path)
         if metadata_path:
             os.remove(metadata_path)
-
-
-
-
-# PandaWep
-# Don't Remove Credit 🥺
-# Telegram Channel @PandaWep
-# Developer https://github.com/PandaWep
+            
+                
