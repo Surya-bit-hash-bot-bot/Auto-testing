@@ -282,6 +282,7 @@ async def auto_rename_files(client, message):
                 document=file_path,
                 thumb=ph_path,
                 caption=logcaption)
+             )
         elif type == "video":
             await bot.send_video(
                 update.message.chat.id,
