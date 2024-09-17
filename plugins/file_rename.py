@@ -283,7 +283,7 @@ async def auto_rename_files(client, message):
                 document=file_path,
                 thumb=ph_path,
                 caption=logcaption)      
-           elif type == "video":
+         elif type == "video":
                 await client.send_document(
                     message.chat.id,
                     document=metadata_path if _bool_metadata else file_path,
@@ -296,7 +296,7 @@ async def auto_rename_files(client, message):
                 video=file_path,
                 thumb=ph_path,
                 caption=logcaption)
-          elif type == "audio":
+         elif type == "audio":
                 await client.send_audio(
                     message.chat.id,
                     audio=metadata_path if _bool_metadata else file_path,
