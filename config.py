@@ -5,20 +5,20 @@ class Config(object):
     # pyro client config
     API_ID    = os.environ.get("API_ID", "21740783")
     API_HASH  = os.environ.get("API_HASH", "a5dc7fec8302615f5b441ec5e238cd46")
-    BOT_TOKEN = os.environ.get("BOT_TOKEN", "6005947500:AAHloPfbZLLgDobGyMwLn1DLbn2WptOJIgo") 
+    BOT_TOKEN = os.environ.get("BOT_TOKEN", "7541201119:AAGTK0XIH-fD9T-BdNl7A7BEaLkKx8GpG4E") 
 
     # database config
-    DB_NAME = os.environ.get("DB_NAME","Speedwolf1")     
-    DB_URL  = os.environ.get("DB_URL","mongodb+srv://Speedwolf1:speedwolf24689@cluster0.rgfywsf.mongodb.net/")
+    DB_NAME = os.environ.get("DB_NAME","filesharingbot")     
+    DB_URL  = os.environ.get("DB_URL","mongodb+srv://kamuimodular:Sspy0rrgSDcLSxQw@cluster0.r86ri.mongodb.net/?retryWrites=true&w=majority")
  
     # other configs
     BOT_UPTIME  = time.time()
-    START_PIC   = os.environ.get("START_PIC", "https://graph.org/file/aa825ab156b1fed2edc2a.jpg")
-    ADMIN       = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '6299192020').split()]
+    START_PIC   = os.environ.get("START_PIC", "https://envs.sh/w6Y.jpg")
+    ADMIN       = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '1501687881 6321064549').split()]
     # -- FORCE_SUB_CHANNELS = ["BotzPW","AshuSupport","AshutoshGoswami24"] -- # 
     FORCE_SUB_CHANNELS = os.environ.get('FORCE_SUB_CHANNELS', '0').split(',')
-    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1001719724807"))
-    DUMP_CHANNEL = int(os.environ.get("DUMP_CHANNEL", "-1001946810914"))
+    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002080756028"))
+    DUMP_CHANNEL = int(os.environ.get("DUMP_CHANNEL", "-1002104573290"))
     PORT = int(os.environ.get("PORT", "8030"))
     
     # wes response configuration     
@@ -30,17 +30,17 @@ class Txt(object):
         
     START_TXT = """Hello {} 
     
-➻ This Is An Advanced And Yet Powerful Rename Bot.
+➻ This Is An Advanced And Yet Powerful Rename Bot
     
-➻ Using This Bot You Can Auto Rename Of Your Files.
+➻ Using This Bot You Can Auto Rename Of Your Files
     
-➻ This Bot Also Supports Custom Thumbnail And Custom Caption.
+➻ This Bot Also Supports Custom Thumbnail And Custom Caption
     
-➻ Use /tutorial Command To Know How To Use Me.
+➻ Use /tutorial Command To Know How To Use Me
 
-<b>Bot Is Made By @PandaWep</b>
+<b>Bot Is Made By @Itz_Spike</b>
 
-<b><a href='https://github.com/AshutoshGoswami24/Auto-Rename-Bot'>AshutoshGoswami24/Auto-Rename-Bot.git</a></b>
+<b><a href='https://t.me/Netflix_Back_Up'>Movie & Series Channel</a></b>
 """
     
     FILE_NAME_TXT = """<b><u>SETUP AUTO RENAME FORMAT</u></b>
@@ -50,7 +50,7 @@ Use These Keywords To Setup Custom File Name
 ✓ episode :- To Replace Episode Number
 ✓ quality :- To Replace Video Resolution
 
-<b>➻ Example :</b> <code> /autorename Naruto Shippuden S02 - EPepisode - quality  [Dual Audio] - @PandaWep </code>
+<b>➻ Example :</b> <code> /autorename Naruto Shippuden S02 - EPepisode - quality  [Dual Audio] - @Anime_Wide </code>
 
 <b>➻ Your Current Auto Rename Format :</b> <code>{format_template}</code> """
     
@@ -58,10 +58,10 @@ Use These Keywords To Setup Custom File Name
 <b>📝 Language :</b> <a href='https://python.org'>Python 3</a>
 <b>📚 Library :</b> <a href='https://pyrogram.org'>Pyrogram 2.0</a>
 <b>🚀 Server :</b> <a href='https://heroku.com'>Heroku</a>
-<b>📢 Channel :</b> <a href='https://t.me/PandaWep'>PandaWep</a>
-<b>🧑‍💻 Developer :</b> <a href='https://t.me/PandaWep'>PandaWep</a>
+<b>📢 Channel :</b> <a href='https://t.me/Anime_Wide'>Anime Channel</a>
+<b>🧑‍💻 Developer :</b> <a href='https://t.me/Itz_Spike'>Spike</a>
     
-<b>♻️ Bot Made By :</b> @PandaWep"""
+<b>♻️ Bot Made By :</b> @Itz_Spike"""
     SEND_METADATA = """
 ❪ SET CUSTOM METADATA ❫
 
@@ -90,19 +90,19 @@ Use These Keywords To Setup Custom File Name
 ┣⪼ ⏳️ Dᴏɴᴇ : {0}%
 ┣⪼ 🚀 Sᴩᴇᴇᴅ: {3}/s
 ┣⪼ ⏰️ Eᴛᴀ: {4}
-┣⪼ 🥺 joine Plz: @PandaWep
+┣⪼ 😶‍🌫️ ᴘᴏᴡᴇʀᴇᴅ ʙʏ: @Netflix_Dual
 ╰━━━━━━━━━━━━━━━➣ </b>"""
     
     
-    DONATE_TXT = """<b>🥲 Thanks For Showing Interest In Donation! ❤️</b>
+    DONATE_TXT = """<b>Thanks For Showing Interest In Donation! ❤️</b>
     
-If You Like My Bots & Projects, You Can 🎁 Donate Me Any Amount From 10 Rs Upto Your Choice.
+If You Like My Bots & Projects, You Can 🎁 Donate Me Any Amount From 1 Rs Upto Your Choice.
     
-<b>My UPI - PandaWep@ybl</b> """
+<b>UPI diya to kya pata tu police ka sath share nhi karega 😶‍🌫️- </b> """
     
     HELP_TXT = """<b>Hey</b> {}
     
-Joine @PandaWep To Help """
+@Itz_Spike """
 
 
 
