@@ -534,67 +534,112 @@ async def auto_rename_files(client, message):
 
             img.save(ph_path, "JPEG")    
 
-             
+
+
+        
+
         try:
-            if media_type == "document":
+
+            type = media_type  # Use 'media_type' variable instead
+
+            if type == "document":
+
                 await client.send_document(
+
                     message.chat.id,
+
                     document=metadata_path if _bool_metadata else file_path,
+
                     thumb=ph_path,
+
                     caption=caption,
+
                     progress=progress_for_pyrogram,
+
                     progress_args=("Upload Started.....", upload_msg, time.time())
+
                 )
+
+            elif type == "video":
+
                 await client.send_document(
-                    Config.DUMP_CHANNEL,
-                    document=metadata_path if _bool_metadata else file_path,
-                    thumb=ph_path,
-                    caption=f"**{new_file_name}**\nUploaded by {message.from_user.mention()}"
-                )
-            elif media_type == "video":
-                await client.send_video(
+
                     message.chat.id,
-                    video=metadata_path if _bool_metadata else file_path,
+
+                    document=metadata_path if _bool_metadata else file_path,
+
                     thumb=ph_path,
+
                     caption=caption,
+
                     progress=progress_for_pyrogram,
+
                     progress_args=("Upload Started.....", upload_msg, time.time())
+
                 )
-                await client.send_video(
-                    Config.DUMP_CHANNEL,
-                    video=metadata_path if _bool_metadata else file_path,
-                    thumb=ph_path,
-                    caption=f"**{new_file_name}**\nUploaded by {message.from_user.mention()}"
-                )
-            elif media_type == "audio":
+
+            elif type == "audio":
+
                 await client.send_audio(
+
                     message.chat.id,
+
                     audio=metadata_path if _bool_metadata else file_path,
+
                     caption=caption,
+
                     thumb=ph_path,
+
                     duration=duration,
+
                     progress=progress_for_pyrogram,
+
                     progress_args=("Upload Started.....", upload_msg, time.time())
+
                 )
-                await client.send_audio(
-                    Config.DUMP_CHANNEL,
-                    audio=metadata_path if _bool_metadata else file_path,
-                    thumb=ph_path,
-                    caption=f"**{new_file_name}**\nUploaded by {message.from_user.mention()}"
-                )
+
         except Exception as e:
+
             os.remove(file_path)
+
             if ph_path:
+
                 os.remove(ph_path)
+
             if metadata_path:
+
                 os.remove(metadata_path)
+
             return await upload_msg.edit(f"Error: {e}")
 
+
+
         await download_msg.delete() 
+
         if ph_path:
+
             os.remove(ph_path)
+
         if file_path:
+
             os.remove(file_path)
+
         if metadata_path:
+
             os.remove(metadata_path)
-                
+
+
+
+
+
+
+
+
+
+# PandaWep
+
+# Don't Remove Credit 🥺
+
+# Telegram Channel @PandaWep
+
+# Developer https://github.com/PandaWep
