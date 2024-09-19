@@ -10,13 +10,13 @@ async def start(client, message):
     user = message.from_user
     await AshutoshGoswami24.add_user(client, message)                
     button = InlineKeyboardMarkup([[
-      InlineKeyboardButton('📢 Updates', url='https://t.me/PandaWep'),
-      InlineKeyboardButton('💬 Support', url='https://t.me/AshutoshGoswami24')
+      InlineKeyboardButton('📢 Updates', url='https://t.me/Manga_Yugen'),
+      InlineKeyboardButton('💬 Support', url='https://t.me/Manga_Yugen_Group')
     ],[
       InlineKeyboardButton('⚙️ Help', callback_data='help'),
       InlineKeyboardButton('💙 About', callback_data='about')
     ],[
-        InlineKeyboardButton("🧑‍💻 Developer 🧑‍💻", url='https://t.me/AshutoshGoswami24')
+        InlineKeyboardButton("🧑‍💻 Developer 🧑‍💻", url='https://t.me/VOATcb')
     ]])
     if Config.START_PIC:
         await message.reply_photo(Config.START_PIC, caption=Txt.START_TXT.format(user.mention), reply_markup=button)       
@@ -33,13 +33,13 @@ async def cb_handler(client, query: CallbackQuery):
             text=Txt.START_TXT.format(query.from_user.mention),
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup([[
-                InlineKeyboardButton('📢 Updates', url='https://t.me/PandaWep'),
-                InlineKeyboardButton('💬 Support', url='https://t.me/AshutoshGoswami24')
+                InlineKeyboardButton('📢 Updates', url='https://t.me/Manga_Yugen'),
+                InlineKeyboardButton('💬 Support', url='https://t.me/Manga_Yugen_Group')
                 ],[
                 InlineKeyboardButton('⚙️ Help', callback_data='help'),
                 InlineKeyboardButton('💙 About', callback_data='about')
                 ],[
-                InlineKeyboardButton("🧑‍💻 Developer 🧑‍💻", url='https://t.me/AshutoshGoswami24')
+                InlineKeyboardButton("🧑‍💻 Developer 🧑‍💻", url='https://t.me/VOATcb')
                 ]])
         )
     elif data == "caption":
