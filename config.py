@@ -18,7 +18,6 @@ class Config(object):
     # -- FORCE_SUB_CHANNELS = ["BotzPW","AshuSupport","AshutoshGoswami24"] -- # 
     FORCE_SUB_CHANNELS = os.environ.get('FORCE_SUB_CHANNELS', '0').split(',')
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002080756028"))
-    DUMP_CHANNEL = int(os.environ.get("DUMP_CHANNEL", "-1002104573290"))
     PORT = int(os.environ.get("PORT", "8030"))
     
     # wes response configuration     
