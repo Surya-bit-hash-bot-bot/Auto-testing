@@ -1,4 +1,6 @@
+import pyrogram.utils
 
+pyrogram.utils.MIN_CHANNEL_ID = -1002080756028
 
 
 from datetime import datetime
