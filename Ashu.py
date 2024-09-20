@@ -1,6 +1,4 @@
-import pyrogram.utils
-
-pyrogram.utils.MIN_CHANNEL_ID = -1002080756028
+pyrogram.utils.MIN_CHANNEL_ID =  #add your channel I'd here start with -100
 
 
 from datetime import datetime
@@ -10,7 +8,6 @@ from pyrogram.raw.all import layer
 from config import Config
 from aiohttp import web
 from route import web_server
-import pyromod 
 class Bot(Client):
 
     def __init__(self):
