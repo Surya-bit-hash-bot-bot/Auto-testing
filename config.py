@@ -9,7 +9,7 @@ class Config(object):
 
     # database config
     DB_NAME = os.environ.get("DB_NAME","filesharingbot")     
-    DB_URL  = os.environ.get("DB_URL","mongodb+srv://kamuimodular:Sspy0rrgSDcLSxQw@cluster0.r86ri.mongodb.net/?retryWrites=true&w=majority")
+    DB_URL  = os.environ.get("DB_URL","mongodb+srv://taki:taki@taki710.lk8s5t1.mongodb.net/?retryWrites=true&w=majority")
  
     # other configs
     BOT_UPTIME  = time.time()
@@ -18,7 +18,7 @@ class Config(object):
     # -- FORCE_SUB_CHANNELS = ["BotzPW","AshuSupport","AshutoshGoswami24"] -- # 
     FORCE_SUB_CHANNELS = os.environ.get('FORCE_SUB_CHANNELS', '0').split(',')
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002080756028"))
-    PORT = int(os.environ.get("PORT", "8020"))
+    PORT = int(os.environ.get("PORT", "8080"))
     
     # wes response configuration     
     WEBHOOK = bool(os.environ.get("WEBHOOK", "True"))
