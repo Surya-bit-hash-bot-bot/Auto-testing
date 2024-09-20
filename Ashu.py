@@ -1,5 +1,6 @@
-pyrogram.utils.MIN_CHANNEL_ID = -1002080756028 #add your channel I'd here start with -100
+import pyrogram.utils
 
+pyrogram.utils.MIN_CHANNEL_ID = -1002080756028 
 
 from datetime import datetime
 from pytz import timezone
