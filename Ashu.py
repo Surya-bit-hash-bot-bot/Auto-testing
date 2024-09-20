@@ -8,6 +8,7 @@ from pyrogram import Client, __version__
 from pyrogram.raw.all import layer
 from config import Config
 from aiohttp import web
+import pyromod
 from route import web_server
 class Bot(Client):
 
