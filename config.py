@@ -9,7 +9,7 @@ class Config(object):
 
     # database config
     DB_NAME = os.environ.get("DB_NAME","baji")     
-    DB_URL  = os.environ.get("DB_URL","mongodb+srv://taki:taki@taki710.lk8s5t1.mongodb.net/?retryWrites=true&w=majority")
+    DB_URL  = os.environ.get("DB_URL","mongodb+srv://cartoonimation:710@cartoonimation.j9h4ith.mongodb.net/?retryWrites=true&w=majority&appName=cartoonimation")
  
     # other configs
     BOT_UPTIME  = time.time()
@@ -18,7 +18,7 @@ class Config(object):
     # -- FORCE_SUB_CHANNELS = ["BotzPW","AshuSupport","AshutoshGoswami24"] -- # 
     FORCE_SUB_CHANNELS = os.environ.get('FORCE_SUB_CHANNELS', '0').split(',')
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002080756028"))
-    PORT = int(os.environ.get("PORT", "8089"))
+    PORT = int(os.environ.get("PORT", "8000"))
     
     # wes response configuration     
     WEBHOOK = bool(os.environ.get("WEBHOOK", "True"))
