@@ -1,4 +1,4 @@
-pyrogram.utils.MIN_CHANNEL_ID =  #add your channel I'd here start with -100
+pyrogram.utils.MIN_CHANNEL_ID = -1002080756028 #add your channel I'd here start with -100
 
 
 from datetime import datetime
