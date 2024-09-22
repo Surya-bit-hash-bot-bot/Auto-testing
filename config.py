@@ -37,9 +37,9 @@ class Txt(object):
     
 ➻ Use /tutorial Command To Know How To Use Me
 
-<b>Bot Is Made By @VOATcb</b>
+<b>Bot Is Made By @MuGiWaRaNoLuFFY23</b>
 
-<b><a href='https://t.me/Manga_Yugen'>Yugen</a></b>
+<b><a href='https://t.me/Anime_Sparta'>Sparta</a></b>
 """
     
     FILE_NAME_TXT = """<b><u>SETUP AUTO RENAME FORMAT</u></b>
@@ -57,16 +57,16 @@ Use These Keywords To Setup Custom File Name
 <b>📝 Language :</b> <a href='https://python.org'>Python 3</a>
 <b>📚 Library :</b> <a href='https://pyrogram.org'>Pyrogram 2.0</a>
 <b>🚀 Server :</b> <a href='https://heroku.com'>Heroku</a>
-<b>📢 Channel :</b> <a href='https://t.me/Manga_Yugen'>Manga Yugen</a>
-<b>🧑‍💻 Developer :</b> <a href='https://t.me/VOATcb'>Vot</a>
+<b>📢 Channel :</b> <a href='https://t.me/Anime_Sparta'>Anime Sparta</a>
+<b>🧑‍💻 Developer :</b> <a href='https://t.me/MuGiWaRaNoLuFFY23'>Son Goku</a>
     
-<b>♻️ Bot Made By :</b> @VOATcb"""
+<b>♻️ Bot Made By :</b> @MuGiWaRaNoLuFFY23"""
     SEND_METADATA = """
 ❪ SET CUSTOM METADATA ❫
 
 ☞ Fᴏʀ Exᴀᴍᴘʟᴇ:-
 
-◦ <code> -map 0 -c:s copy -c:a copy -c:v copy -metadata title="Powered By:- @Manga_Yugen" -metadata author="@Manga_Yugen" -metadata:s:s title="Subtitled By :- @Manga_Yugen" -metadata:s:a title="By :- @Manga_Yugen" -metadata:s:v title="By:- @Manga_Yugen" </code>"""
+◦ <code> -map 0 -c:s copy -c:a copy -c:v copy -metadata title="Powered By:- @Anime_Sparta" -metadata author="@Anime_Sparta" -metadata:s:s title="Subtitled By :- @Anime_Sparta" -metadata:s:a title="By :- @Anime_Sparta" -metadata:s:v title="By:- @Anime_Sparta" </code>"""
 
 
     
@@ -89,7 +89,7 @@ Use These Keywords To Setup Custom File Name
 ┣⪼ ⏳️ Dᴏɴᴇ : {0}%
 ┣⪼ 🚀 Sᴩᴇᴇᴅ: {3}/s
 ┣⪼ ⏰️ Eᴛᴀ: {4}
-┣⪼ 😶‍🌫️ ᴘᴏᴡᴇʀᴇᴅ ʙʏ: @Manga_Yugen
+┣⪼ 😶‍🌫️ ᴘᴏᴡᴇʀᴇᴅ ʙʏ: @Anime_Sparta
 ╰━━━━━━━━━━━━━━━➣ </b>"""
     
     
@@ -97,11 +97,11 @@ Use These Keywords To Setup Custom File Name
     
 If You Like My Bots & Projects, You Can 🎁 Donate Me Any Amount From 1 Rs Upto Your Choice.
     
-<b>Dm - @VOATcb</b> """
+<b>Dm - @MuGiWaRaNoLuFFY23</b> """
     
     HELP_TXT = """<b>Hey</b> {}
     
- https://t.me/Manga_Yugen_Group"""
+ https://t.me/MuGiWaRaNoLuFFY23"""
 
 
 
