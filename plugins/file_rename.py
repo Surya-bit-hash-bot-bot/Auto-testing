@@ -266,7 +266,7 @@ def extract_episode_number(filename):
 
 # Example Usage:
 
-filename = "Naruto Shippuden S01 - EP07 - 1080p [Dual Audio] @Madflix_Bots.mkv"
+filename = "Naruto Shippuden S01 - EP07 - 1080p [Dual Audio] @Anime_Sparta.mkv"
 
 episode_number = extract_episode_number(filename)
 
