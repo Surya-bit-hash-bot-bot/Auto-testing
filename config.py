@@ -3,21 +3,21 @@ id_pattern = re.compile(r'^.\d+$')
 
 class Config(object):
     # pyro client config
-    API_ID    = os.environ.get("API_ID", "21740783")
-    API_HASH  = os.environ.get("API_HASH", "a5dc7fec8302615f5b441ec5e238cd46")
-    BOT_TOKEN = os.environ.get("BOT_TOKEN", "7541201119:AAGTK0XIH-fD9T-BdNl7A7BEaLkKx8GpG4E") 
+    API_ID    = os.environ.get("API_ID", "20478011")
+    API_HASH  = os.environ.get("API_HASH", "0e4dcf39643e83c3c174a0d2370e5b4a")
+    BOT_TOKEN = os.environ.get("BOT_TOKEN", "7077374297:AAGgxSqJOrJ5GR8E3iiphrAzpL1FT1RW3Fk") 
 
     # database config
     DB_NAME = os.environ.get("DB_NAME","baji")     
-    DB_URL  = os.environ.get("DB_URL","mongodb+srv://cartoonimation:710@cartoonimation.j9h4ith.mongodb.net/?retryWrites=true&w=majority&appName=cartoonimation")
+    DB_URL  = os.environ.get("DB_URL","mongodb+srv://suryagupta1928:6thfnQ3AxzK6VJUA@cluster0.6ppqasw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
  
     # other configs
     BOT_UPTIME  = time.time()
     START_PIC   = os.environ.get("START_PIC", "https://envs.sh/01J.jpg")
-    ADMIN       = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '1501687881 6321064549').split()]
+    ADMIN       = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '2061656269').split()]
     # -- FORCE_SUB_CHANNELS = ["BotzPW","AshuSupport","AshutoshGoswami24"] -- # 
     FORCE_SUB_CHANNELS = os.environ.get('FORCE_SUB_CHANNELS', '0').split(',')
-    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002080756028"))
+    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002306621324"))
     PORT = int(os.environ.get("PORT", "8078"))
     
     # wes response configuration     
