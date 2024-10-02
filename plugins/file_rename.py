@@ -13,10 +13,11 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 
 from helper.utils import progress_for_pyrogram, humanbytes, convert
+from utils import check_verification, get_token
 
 from helper.database import AshutoshGoswami24
 
-from config import Config, Txt
+from config import Config, Txt,VERIFY, VERIFY_TUTORIAL, BOT_USERNAME
 
 import os
 
@@ -25,6 +26,7 @@ import asyncio
 import time
 
 import re
+
 
 
 
@@ -278,7 +280,19 @@ print(f"Extracted Episode Number: {episode_number}")
 
 @Client.on_message(filters.private & (filters.document | filters.video | filters.audio))
 
-async def auto_rename_files(client, message):    
+async def auto_rename_files(client, message):
+    if not await check_verification(client, message.from_user.id) and VERIFY == True:
+        btn = [[
+            InlineKeyboardButton("Verify", url=await get_token(client, message.from_user.id, f"https://telegram.me/{BOT_USERNAME}?start="))
+        ],[
+            InlineKeyboardButton("How To Open Link & Verify", url=VERIFY_TUTORIAL)
+        ]]
+        await message.reply_text(
+            text="<b>You are not verified !\nKindly verify to continue !</b>",
+            protect_content=True,
+            reply_markup=InlineKeyboardMarkup(btn)
+        )
+        return
 
     user_id = message.from_user.id
 
