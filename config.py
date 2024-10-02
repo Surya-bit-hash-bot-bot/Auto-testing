@@ -1,4 +1,13 @@
 import re, os, time
+from os import environ
+
+API = environ.get("API", "544622f7e2758cda8ed00914e54b647fff7895d3") # shortlink api
+URL = environ.get("URL", "publicearn.com") # shortlink domain without https://
+VERIFY_TUTORIAL = environ.get("VERIFY_TUTORIAL", "https://t.me/Hentai_Sparta/5") # how to open link 
+BOT_USERNAME = environ.get("BOT_USERNAME", "Trfjrjfjail_bot") # bot username without @
+VERIFY = environ.get("VERIFY", "True") # set True Or False and make sure spelling is correct and first letter capital.
+
+
 id_pattern = re.compile(r'^.\d+$') 
 
 class Config(object):
