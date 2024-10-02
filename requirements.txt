@@ -11,4 +11,6 @@ pyromod
 psutil
 humanize
 ffmpeg-python
+shortzy
+pytz
  
